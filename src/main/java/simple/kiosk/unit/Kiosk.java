@@ -1,6 +1,7 @@
 package simple.kiosk.unit;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -11,6 +12,9 @@ import simple.kiosk.unit.order.Order;
 
 @Getter
 public class Kiosk {
+
+	private static final LocalTime SHOT_OPEN_TIME = LocalTime.of(10, 0);
+	private static final LocalTime SHOT_CLOSE_TIME = LocalTime.of(22, 0);
 
 	private final List<Beverage> beverages = new ArrayList<>();
 
@@ -42,6 +46,23 @@ public class Kiosk {
 	}
 
 	public Order createOrder() {
-		return new Order(beverages, LocalDateTime.now());
+		LocalDateTime currentDateTime = LocalDateTime.now();
+		LocalTime currentTime = currentDateTime.toLocalTime();
+
+		if (currentTime.isBefore(SHOT_OPEN_TIME) || currentTime.isAfter(SHOT_CLOSE_TIME)) {
+			throw new IllegalArgumentException("죄송합니다. 영업 시간은 10 ~ 22시입니다.");
+		}
+
+		return new Order(beverages, currentDateTime);
+	}
+
+	public Order createOrder(LocalDateTime currentDateTime) {
+		LocalTime currentTime = currentDateTime.toLocalTime();
+
+		if (currentTime.isBefore(SHOT_OPEN_TIME) || currentTime.isAfter(SHOT_CLOSE_TIME)) {
+			throw new IllegalArgumentException("죄송합니다. 영업 시간은 10 ~ 22시입니다.");
+		}
+
+		return new Order(beverages, currentDateTime);
 	}
 }

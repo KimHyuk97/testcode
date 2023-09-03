@@ -2,6 +2,8 @@ package simple.kiosk.unit;
 
 import static org.assertj.core.api.Assertions.*;
 
+import java.time.LocalDateTime;
+
 import org.junit.jupiter.api.Test;
 
 import simple.kiosk.unit.beverage.Americano;
@@ -69,12 +71,27 @@ class KioskTest {
 	}
 
 	@Test
-	void createOrder() {
+	void createOrderOutsideOpenTime() {
+		Kiosk kiosk = new Kiosk();
+		kiosk.add(new Latte(), 3);
+		kiosk.add(new Americano());
+
+		LocalDateTime localDateTime = LocalDateTime.of(2023, 9, 3, 23, 0);
+
+		assertThatThrownBy(() -> kiosk.createOrder(localDateTime))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("죄송합니다. 영업 시간은 10 ~ 22시입니다.");
+	}
+
+	@Test
+	void createOrderInsideOpenTime() {
 		Kiosk kiosk = new Kiosk();
 		kiosk.add(new Latte());
 		kiosk.add(new Americano());
 
-		Order order = kiosk.createOrder();
+		LocalDateTime localDateTime = LocalDateTime.of(2023, 9, 3, 10, 0);
+
+		Order order = kiosk.createOrder(localDateTime);
 		assertThat(order.getBeverages().get(0).getName()).isEqualTo("카페라떼");
 		assertThat(order.getBeverages().get(0).getPrice()).isEqualTo(3500);
 		assertThat(order.getBeverages().get(1).getName()).isEqualTo("아메리카노");
