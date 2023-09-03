@@ -21,6 +21,32 @@ class KioskTest {
 	}
 
 	@Test
+	void addSeveralBeverages() {
+		Kiosk kiosk = new Kiosk();
+		Americano americano = new Americano();
+
+		kiosk.add(americano, 4);
+
+		assertThat(kiosk.getBeverages()).hasSize(4);
+		assertThat(kiosk.getBeverages().get(0)).isEqualTo(americano);
+		assertThat(kiosk.getBeverages().get(1)).isEqualTo(americano);
+		assertThat(kiosk.getBeverages().get(2)).isEqualTo(americano);
+		assertThat(kiosk.getBeverages().get(3)).isEqualTo(americano);
+	}
+
+	@Test
+	void addZeroBeverages() {
+		Kiosk kiosk = new Kiosk();
+		Americano americano = new Americano();
+
+		assertThatThrownBy(() -> kiosk.add(americano, 0))
+			.isInstanceOf(IllegalArgumentException.class)
+			.hasMessage("음료는 1잔 이상 주문하실 수 있습니다.");
+	}
+
+
+
+	@Test
 	void remove() {
 		Kiosk kiosk = new Kiosk();
 		Americano americano = new Americano();

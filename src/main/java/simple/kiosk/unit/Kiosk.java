@@ -3,6 +3,7 @@ package simple.kiosk.unit;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import lombok.Getter;
 import simple.kiosk.unit.beverage.Beverage;
@@ -15,6 +16,13 @@ public class Kiosk {
 
 	public void add(Beverage beverage) {
 		beverages.add(beverage);
+	}
+
+	public void add(Beverage beverage, int count) {
+		if (count <= 0) {
+			throw new IllegalArgumentException("음료는 1잔 이상 주문하실 수 있습니다.");
+		}
+		IntStream.rangeClosed(1, count).forEach(i -> beverages.add(beverage));
 	}
 
 	public void remove(Beverage beverage) {
