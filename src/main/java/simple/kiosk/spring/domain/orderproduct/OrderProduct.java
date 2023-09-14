@@ -1,4 +1,4 @@
-package simple.kiosk.spring.domain.order;
+package simple.kiosk.spring.domain.orderproduct;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import simple.kiosk.spring.domain.BaseEntity;
+import simple.kiosk.spring.domain.order.Order;
 import simple.kiosk.spring.domain.product.Product;
 
 /**

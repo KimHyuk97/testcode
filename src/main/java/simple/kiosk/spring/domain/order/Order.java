@@ -17,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import simple.kiosk.spring.domain.BaseEntity;
+import simple.kiosk.spring.domain.orderproduct.OrderProduct;
 import simple.kiosk.spring.domain.product.Product;
 
 /**

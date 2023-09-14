@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import simple.kiosk.spring.api.controller.order.response.OrderCreateRequest;
 import simple.kiosk.spring.api.service.order.OrderService;
+import simple.kiosk.spring.api.service.order.response.OrderResponse;
 
 /**
  * packageName    : simple.kiosk.spring.api.controller.product
@@ -28,9 +29,8 @@ public class OrderController {
 	private final OrderService orderService;
 
 	@PostMapping("/api/v1/orders/new")
-	public void createOrder(@RequestBody OrderCreateRequest request) {
-		orderService.createOrder(request, LocalDateTime.now());
-
+	public OrderResponse createOrder(@RequestBody OrderCreateRequest request) {
+		return orderService.createOrder(request, LocalDateTime.now());
 	}
 
 }
