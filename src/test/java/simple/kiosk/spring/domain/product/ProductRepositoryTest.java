@@ -63,7 +63,7 @@ class ProductRepositoryTest {
 
 	@AfterEach
 	void clear() {
-		productRepository.deleteAll();
+		productRepository.deleteAllInBatch();
 	}
 
 	@Test
@@ -100,5 +100,15 @@ class ProductRepositoryTest {
 				tuple("001", "아메리카노", SELLING),
 				tuple("002", "카페라떼", HOLD)
 			);
+	}
+
+	@Test
+	@DisplayName("가장 마지막으로 저장한 상품의 상품번호를 읽어온다.")
+	void findLastedProduct() {
+		// when
+		String lastedProduct = productRepository.findLastedProductNumber();
+
+		// then
+		assertThat(lastedProduct).isEqualTo("003");
 	}
 }

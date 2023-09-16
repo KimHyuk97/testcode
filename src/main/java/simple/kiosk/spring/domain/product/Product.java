@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import simple.kiosk.spring.api.controller.product.request.ProductCreateRequest;
 import simple.kiosk.spring.domain.BaseEntity;
 
 /**
@@ -45,11 +46,23 @@ public class Product extends BaseEntity {
 	private int price;
 
 	@Builder
-	private Product(String productNumber, ProductType type, ProductSellingStatus sellingStatus, String name, int price) {
+	private Product(String productNumber, ProductType type, ProductSellingStatus sellingStatus, String name,
+		int price) {
+
 		this.productNumber = productNumber;
 		this.type = type;
 		this.sellingStatus = sellingStatus;
 		this.name = name;
 		this.price = price;
+	}
+
+	public static Product createProduct(String productNumber, ProductCreateRequest request) {
+		return Product.builder()
+			.productNumber(productNumber)
+			.type(request.getType())
+			.sellingStatus(request.getSellingStatus())
+			.name(request.getName())
+			.price(request.getPrice())
+			.build();
 	}
 }
