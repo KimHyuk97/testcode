@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import simple.kiosk.spring.api.Response;
 import simple.kiosk.spring.api.controller.product.request.ProductCreateRequest;
 import simple.kiosk.spring.api.service.product.ProductService;
 import simple.kiosk.spring.api.service.product.response.ProductResponse;
@@ -29,12 +32,12 @@ public class ProductController {
 	private final ProductService productService;
 
 	@PostMapping("/api/v1/products/new")
-	public void createProduct(ProductCreateRequest request) {
-		productService.createProduct(request);
+	public Response<ProductResponse> createProduct(@RequestBody @Valid ProductCreateRequest request) {
+		return Response.ok(productService.createProduct(request));
 	}
 
 	@GetMapping("/api/v1/products/selling")
-	public List<ProductResponse> getSellingProducts() {
-		return productService.getSellingProducts();
+	public Response<List<ProductResponse>> getSellingProducts() {
+		return Response.ok(productService.getSellingProducts());
 	}
 }
